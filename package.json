@@ -6,8 +6,12 @@
   "scripts": {
     "start": "node server.js"
   },
+  "keywords": ["coupledp", "api", "google", "customsearch", "dp", "images"],
+  "author": "Rudra",
+  "license": "MIT",
   "dependencies": {
-    "axios": "latest",
-    "express": "latest"
+    "axios": "^1.6.8",
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
   }
 }
