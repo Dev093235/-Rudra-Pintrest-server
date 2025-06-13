@@ -9,25 +9,33 @@ const API_KEY = process.env.GOOGLE_API_KEY;
 const CX_ID = process.env.CX_ID;
 
 app.get("/", (req, res) => {
-  res.send("✅ Server is live. Use /links?q=query&n=number");
+  res.send("✅ Rudra Pinterest DP Server Working");
 });
 
-app.get("/links", async (req, res) => {
+app.get("/dp", async (req, res) => {
   const query = req.query.q || "couple dp";
-  const count = parseInt(req.query.n || "5");
+  const count = parseInt(req.query.n || "3");
 
   if (!API_KEY || !CX_ID) {
-    return res.status(500).json({ error: "Missing API_KEY or CX_ID" });
+    return res.status(500).json({ error: "Missing GOOGLE_API_KEY or CX_ID in environment." });
   }
 
   try {
     const url = `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${CX_ID}&searchType=image&q=${encodeURIComponent(query)}&num=${count}`;
     const response = await axios.get(url);
-    const images = response.data.items.map(item => item.link);
-    res.json({ status: "success", count: images.length, data: images });
+
+    const items = response.data.items || [];
+    const imageLinks = items.map(item => item.link);
+
+    return res.json({
+      status: "success",
+      count: imageLinks.length,
+      data: imageLinks
+    });
+
   } catch (err) {
-    console.error(err.message);
-    res.status(500).json({ status: "error", message: "API fetch failed" });
+    console.error("❌ Error fetching images:", err.message);
+    return res.status(500).json({ status: "error", message: "API fetch failed" });
   }
 });
 
