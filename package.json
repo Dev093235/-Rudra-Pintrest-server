@@ -1,0 +1,13 @@
+{
+  "name": "coupledp-api",
+  "version": "1.0.0",
+  "description": "Couple DP search using Google Custom Search API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "axios": "latest",
+    "express": "latest"
+  }
+}
